@@ -1,0 +1,121 @@
+{
+  "tripName": "Alaska 2026",
+  "itinerary": [
+    {
+      "date": "2026-05-18",
+      "displayDate": "Monday, May 18",
+      "events": [
+        {
+          "id": "e1",
+          "time": "06:35 pm",
+          "typicalVisitTime": "1 hr",
+          "plannedVisitTime": "1.5 hrs",
+          "type": "flight",
+          "title": "Arrive ANC (AA)",
+          "imageUrl": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05",
+          "appLink": "aa://",
+          "webLink": "https://www.aa.com",
+          "address": "6000 W International Airport Rd, Anchorage, AK 99502",
+          "confirmation": "DKTXID",
+          "accessCode": "Gate C4"
+        },
+        {
+          "id": "e2",
+          "time": "07:15 pm",
+          "typicalVisitTime": "30 min",
+          "plannedVisitTime": "45 min",
+          "type": "transit",
+          "title": "Alamo Rental Car",
+          "imageUrl": "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2",
+          "appLink": "alamo://",
+          "webLink": "https://www.alamo.com",
+          "address": "5000 W International Airport Rd, Anchorage, AK 99502",
+          "confirmation": "H-1687660737",
+          "accessCode": "Gold Member Area"
+        },
+        {
+          "id": "e3",
+          "time": "07:45 pm",
+          "typicalVisitTime": "12 hrs",
+          "plannedVisitTime": "12 hrs",
+          "type": "lodging",
+          "title": "Hyatt Place Anchorage",
+          "imageUrl": "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+          "appLink": "hyatt://",
+          "webLink": "https://www.hyatt.com",
+          "address": "101 E Tudor Rd, Anchorage, AK 99503",
+          "confirmation": "45594513",
+          "accessCode": "Front Desk / App Key"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-19",
+      "displayDate": "Tuesday, May 19",
+      "events": [
+        {
+          "id": "e4",
+          "time": "07:30 am",
+          "typicalVisitTime": "3 hrs",
+          "plannedVisitTime": "3.5 hrs",
+          "type": "move",
+          "title": "Drive to Kenai",
+          "imageUrl": "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+          "appLink": "googlemaps://",
+          "webLink": "https://maps.google.com",
+          "address": "Kenai, AK 99611",
+          "confirmation": "N/A",
+          "accessCode": "Full Tank Needed"
+        },
+        {
+          "id": "e7",
+          "time": "09:30 pm",
+          "typicalVisitTime": "10 hrs",
+          "plannedVisitTime": "10 hrs",
+          "type": "lodging",
+          "title": "Clifftop Townhouse",
+          "imageUrl": "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2",
+          "appLink": "vrbo://",
+          "webLink": "https://www.vrbo.com",
+          "address": "Seward, AK 99664",
+          "confirmation": "51230923",
+          "accessCode": "Sent 3 days prior"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-20",
+      "displayDate": "Wednesday, May 20",
+      "events": [
+        {
+          "id": "e8",
+          "time": "09:00 am",
+          "typicalVisitTime": "3 hrs",
+          "plannedVisitTime": "3.5 hrs",
+          "type": "activity",
+          "title": "Alaska SeaLife Center",
+          "imageUrl": "https://images.unsplash.com/photo-1516683018251-096773b3206c",
+          "appLink": "",
+          "webLink": "https://www.alaskasealife.org",
+          "address": "301 Railway Ave, Seward, AK 99664",
+          "confirmation": "ASLC-2026",
+          "accessCode": "Member Entrance"
+        },
+        {
+          "id": "e9",
+          "time": "06:30 pm",
+          "typicalVisitTime": "2 hrs",
+          "plannedVisitTime": "2.5 hrs",
+          "type": "activity",
+          "title": "High School Graduation",
+          "imageUrl": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1",
+          "appLink": "",
+          "webLink": "",
+          "address": "9583 Kenai Spur Hwy, Kenai, AK 99611",
+          "confirmation": "Kenai Central",
+          "accessCode": "Gym Entrance"
+        }
+      ]
+    }
+  ]
+}

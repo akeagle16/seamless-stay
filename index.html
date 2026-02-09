@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SeamlessStay MVP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', -apple-system, system-ui, sans-serif; 
+            background-color: #f0f2f5; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; 
+        }
+
+        /* --- Header --- */
+        header { background: #1a1a1a; color: white; flex-shrink: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        #progress-container { width: 100%; height: 4px; background: #333; }
+        #progress-bar { height: 100%; width: 0%; background: #007AFF; transition: width 0.3s ease; }
+        .header-content { padding: 15px; text-align: center; }
+        #date-header { font-size: 1.1rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-controls { display: flex; justify-content: center; gap: 15px; }
+        .nav-btn { background: #333; border: 1px solid #444; padding: 6px 15px; border-radius: 15px; font-size: 0.7rem; color: #007AFF; font-weight: 800; cursor: pointer; }
+
+        /* --- App Container --- */
+        #app-container { flex-grow: 1; overflow-y: auto; padding: 10px 0 60px 0; -webkit-overflow-scrolling: touch; }
+        
+        /* --- Card Structure --- */
+        .event-card {
+            background: white; margin: 15px; border-radius: 20px; border: 2.5px solid #5856d6;
+            display: flex; min-height: 200px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); overflow: hidden;
+        }
+        .identical-font { font-family: 'Inter', sans-serif; font-weight: 300; letter-spacing: -1px; color: #1a1a1a; }
+
+        /* --- Left Column (25%) --- */
+        .card-left {
+            width: 25%; padding: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            border-right: 1px solid #f0f0f0; background: #fafafa;
+        }
+        .main-time { font-size: 1.8rem; }
+        .visit-info { font-size: 0.6rem; color: #999; text-align: center; margin-top: 8px; line-height: 1.2; }
+
+        /* --- CENTER COLUMN (50%) - THE NEW STACK LAYOUT --- */
+        .card-center {
+            width: 50%;
+            padding: 15px;
+            display: flex;
+            flex-direction: column; /* Stacks items vertically */
+            gap: 12px; /* Space between Title, Media row, and Address */
+            justify-content: center;
+        }
+
+        .location-name {
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
+            line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+
+        /* New wrapper for side-by-side Image and Icons */
+        .media-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .location-img { 
+            width: 85px; height: 85px; /* Bigger Image */
+            border-radius: 12px; object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .action-icons {
+            display: flex;
+            flex-direction: column; /* Stack icons vertically next to image */
+            gap: 12px;
+            font-size: 1.3rem;
+        }
+
+        /* Address block sitting underneath */
+        .nav-block {
+            background: #2b38df; color: white;
+            padding: 12px;
+            border-radius: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.7rem; font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            width: 100%;
+        }
+
+        /* --- Right Column (25%) --- */
+        .card-right {
+            width: 25%; padding: 12px; display: flex; flex-direction: column; justify-content: center;
+            border-left: 1px solid #f0f0f0; background: #fafafa;
+        }
+        .id-label { font-size: 0.6rem; color: #aaa; text-transform: uppercase; font-weight: 800; margin-bottom: 2px; }
+        .id-value { font-size: 0.8rem; font-weight: 700; color: #333; margin-bottom: 12px; word-break: break-all; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div id="progress-container"><div id="progress-bar"></div></div>
+        <div class="header-content">
+            <div id="date-header">Loading...</div>
+            <div class="nav-controls">
+                <button class="nav-btn" onclick="changeDay(-1)">← PREV</button>
+                <button class="nav-btn" onclick="changeDay(1)">NEXT →</button>
+            </div>
+        </div>
+    </header>
+
+    <main id="app-container"></main>
+
+    <script>
+        let itineraryData = [];
+        let currentDayIndex = 0;
+
+        fetch('./data/itinerary.json')
+            .then(res => res.json())
+            .then(data => {
+                itineraryData = data.itinerary;
+                renderDay();
+            })
+            .catch(err => {
+                document.getElementById('app-container').innerHTML = `<p style="padding:20px; color:red;">Error: JSON not found in /data/ folder.</p>`;
+            });
+
+        function renderDay() {
+            const container = document.getElementById('app-container');
+            if (!itineraryData[currentDayIndex]) return;
+
+            const day = itineraryData[currentDayIndex];
+            document.getElementById('date-header').innerText = day.displayDate;
+            const progress = ((currentDayIndex + 1) / itineraryData.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            
+            container.innerHTML = '';
+            day.events.forEach(event => {
+                const card = document.createElement('div');
+                card.className = 'event-card';
+                card.innerHTML = `
+                    <div class="card-left">
+                        <div class="identical-font main-time">${event.time}</div>
+                        <div class="visit-info">Typical: ${event.typicalVisitTime || '--'}</div>
+                        <div class="visit-info" style="font-weight:800; color:#444;">Planned: ${event.plannedVisitTime || '--'}</div>
+                    </div>
+
+                    <div class="card-center">
+                        <div class="location-name identical-font">${event.title}</div>
+                        
+                        <div class="media-row">
+                            <img src="${event.imageUrl}" class="location-img" onerror="this.src='https://via.placeholder.com/85'">
+                            <div class="action-icons">
+                                <span title="App" onclick="window.location.href='${event.appLink || '#'}'" style="cursor:pointer">📱</span>
+                                <span title="Web" onclick="window.open('${event.webLink || '#'}')" style="cursor:pointer">🌐</span>
+                            </div>
+                        </div>
+                        
+                        <div class="nav-block" onclick="window.open('http://googleusercontent.com/maps.google.com/?q=${encodeURIComponent(event.address)}')">
+                            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 150px;">
+                                ${event.address}
+                            </span>
+                            <span style="font-size: 1.1rem;">📍</span>
+                        </div>
+                    </div>
+
+                    <div class="card-right">
+                        <div class="id-label">Res ID</div>
+                        <div class="id-value">${event.confirmation || '--'}</div>
+                        <div class="id-label">Access Code</div>
+                        <div class="id-value">${event.accessCode || '--'}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            container.scrollTo(0,0);
+        }
+
+        function changeDay(dir) {
+            let next = currentDayIndex + dir;
+            if (next >= 0 && next < itineraryData.length) {
+                currentDayIndex = next;
+                renderDay();
+            }
+        }
+
+        let ts;
+        document.addEventListener('touchstart', e => ts = e.touches[0].clientX);
+        document.addEventListener('touchend', e => {
+            let te = e.changedTouches[0].clientX;
+            if (ts > te + 50) changeDay(1);
+            if (ts < te - 50) changeDay(-1);
+        });
+    </script>
+</body>
+</html>
